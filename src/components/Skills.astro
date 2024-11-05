@@ -1,0 +1,56 @@
+---
+
+---
+
+<section class="skills py-8">
+    <div class="stack gap-2 lg:gap-4">
+        <h2>Game Programmer</h2>
+        <p class="dark:text-white text-black">
+            Knowledge of several engines and frameworks, with 4+ years of
+            industry experience.
+        </p>
+    </div>
+    <div class="stack gap-2 lg:gap-4">
+        <h2>Always Learning</h2>
+        <p class="dark:text-white text-black">
+            Quick to adapt to new technologies, and fully against the don't
+            reinvent the wheel. There is always room for improvement.
+        </p>
+    </div>
+    <div class="stack gap-2 lg:gap-4">
+        <h2>Hire Me</h2>
+        <p class="dark:text-white text-black">
+            I am avaliable for remote contract roles in game development. Feel
+            free to reach out to discuss any gameplay related opportunities.
+        </p>
+    </div>
+</section>
+
+<style>
+    .skills {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .skills h2 {
+        font-size: var(--text-lg);
+    }
+
+    @media (min-width: 50em) {
+        .box {
+            //border-radius: 1.5rem;
+            //padding: 2.5rem;
+        }
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5rem;
+        }
+
+        .skills h2 {
+            font-size: var(--text-2xl);
+        }
+    }
+</style>
