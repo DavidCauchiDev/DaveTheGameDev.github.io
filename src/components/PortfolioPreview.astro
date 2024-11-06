@@ -1,5 +1,4 @@
 ---
-
 import type { CollectionEntry } from "astro:content";
 import { Image } from 'astro:assets';
 
@@ -11,7 +10,7 @@ const { data, slug } = Astro.props.project;
 ---
 
 <a
-    class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 ease-in-out h-48 md:h-64 lg:h-80"
+    class="group relative block overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out h-48 md:h-64 lg:h-80"
     href={`/work/${slug}`}
 >
     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -20,16 +19,36 @@ const { data, slug } = Astro.props.project;
         alt={data.img_alt || ""}
         width={1280}
         height={573}
-        class="w-full h-full object-cover transition-all duration-300"
+        class="w-full h-full object-cover transition-transform duration-300"
         loading="eager"
-        decoding="async"
     />
-    <div class="absolute bottom-0 left-0 right-0 p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-        <h4 class="font-bold text-2xl md:text-3xl text-white mb-2 drop-shadow-lg">
-            {data.title}
-        </h4>
-        <p class="font-medium text-sm md:text-base text-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            {data.description}
-        </p>
+    <div class="absolute bottom-0 left-0 right-0 p-4">
+        <div class="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+            <h4 class="font-bold text-2xl md:text-3xl text-white mb-2 drop-shadow-lg">
+                {data.title}
+            </h4>
+            <p class="font-medium text-sm md:text-base text-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {data.description}
+            </p>
+        </div>
     </div>
 </a>
+
+<style>
+    .group:hover .bg-gradient-to-t {
+        opacity: 1;
+    }
+
+    /* Ensure fallback for non-hover devices */
+    @supports not (hover: hover) {
+        .group:active .absolute {
+            opacity: 1;
+        }
+        .group:active .transform {
+            transform: translateY(0);
+        }
+        .group:active p {
+            opacity: 1;
+        }
+    }
+</style>
