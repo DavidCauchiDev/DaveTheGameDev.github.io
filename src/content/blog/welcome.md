@@ -1,7 +1,7 @@
 ---
 title: Welcome
 publishDate: 2024-07-17 12:55:00
-img: /assets/concept.png
+img: /assets/plagued.webp
 img_alt: Welcome
 category: General
 description: |

@@ -1,7 +1,7 @@
 ---
 title: Phantom Fury
 publishDate: 2024-07-12 00:00:00
-img: /assets/phantom_fury.jpg
+img: /assets/phantom_fury.webp
 img_alt: Phantom Fury
 description: |
   First Person Shooter developed by Slipgate Ironworks
@@ -12,35 +12,57 @@ tags:
   - Tools
 ---
 
-# Overview
-
 Shelly "Bombshell" Harrison is back in this highly interactive mix of first person action and road movie adventure. Embark on an adrenaline-fueled journey around the USA. Use an enormous arsenal of weapons and skills to battle treacherous soldiers and vile mutants, all while trying to save mankind.
 
 [Learn More: 3D Realms Website](https://3drealms.com/games/phantom-fury/)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/2mueZea98Zg?si=cf3EbMYC_Le2QzTg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+# My Contributions to Phantom Fury
 
-# My Contributions
-
-I joined during the vertical slice, with a focus on interaction and combat.
-I implemented the majority of the weapon and upgrade related functionality, whilst being asked to move between many different systems, implementing whatever was required at the time.
-
-***A list of notable features I worked on.***
+I joined the Phantom Fury development team during the vertical slice phase, focusing primarily on interaction and combat systems. My role involved implementing a wide range of features across various game systems, adapting to the project's evolving needs, and refactoring systems to reduce technical debt.
 
 ## Weapon System
-- Developed the core weapon system functionality for projectiles and throwable weapons
-- Developed a projectile system that allowed designers to implement unique effects such as plasma blasts and bouncy projectiles
-- Implementation of the weapon upgrade system that are purchased from the Kiosks
 
-## Player
-- Implemented the player upgrade system and all the individual upgrade functionality avaliable in the Kiosk
-- Implemented the Magnetic Shield and Punch arm functionality
-- Implemented the players inventory system, including assisting the UI designer with UMG related functionality
+For Phantom Fury's weapon systems, I implemented a comprehensive selection of weapons that forms the core of the game's combat experience. My contributions include:
+
+### Core Functionality
+- Developed the core weapon system architecture, supporting a wide range of firearms and unconventional weapons capable of handling various fire modes (single shot, burst, automatic) and  a variety of projectile types
+- Created a modular damage system allowing for different damage types (ballistic, explosive, energy, etc.) and environmental interactions
+
+### Projectile and Throwable Weapons
+- Developed a projectile system supporting behaviors such as:
+  * Homing capabilities for certain weapon types
+  * Ricocheting projectiles for trick shots and environmental puzzles
+  * Area-of-effect explosions with customizable damage falloff
+- Implemented throwable weapons such as the Bowling Bomb
+
+### Weapon Variety
+- Developed a diverse arsenal including but not limited to:
+  * Traditional firearms (pistols, shotguns, assault rifles, SMGs)
+  * Energy weapons with unique visual and gameplay effects such as the Photon Repeater
+  * Exotic weapons like the bug-spitting Wasp Lung and the electrified foam-launching Foam Modulator
+- Ensured each weapon felt unique and served a specific purpose in combat scenarios
+
+### Upgrade System
+- Designed and implemented the weapon upgrade system accessible through in-game Kiosks
+- Implemented various upgrade types, such as increased damage, larger magazines, and special firing modes
+
+This expanded weapon system laid the foundation for Phantom Fury's dynamic and engaging combat, providing players with a diverse and satisfying arsenal to tackle the game's challenges.
+## Player Mechanics
+- Designed and implemented the player upgrade system, including all individual upgrade functionalities available in the Kiosk
+- Developed the Magnetic Shield and Punch arm features
 
 ## Interactive Elements
-- Implemented the interactive terminal system that allowed designers to seamlessly script and control the flow of the game
-- Implemented my favourite feature, the old school keypad requiring the player to physically interact to input the code
-- Collaborated with the design team to create level specific gameplay elements such as the bowling bomb targeting certain triggers to progress gameplay
+- Implemented the interactive terminal system, allowing designers to seamlessly script and control game flow and create some cool puzzles
+- Implemented a fan-favorite feature: the old-school keypad requiring physical player interaction for code input
+- I also implemented many smaller interactable elements
 
-## QA
-- Supported the team with bug fixing and optimisations by directly working with the QA team to find and squash any issues we came across
+## Refactoring and Technical Debt Reduction
+- Proactively refactored existing systems to improve code quality and maintainability
+- Reduced technical debt by streamlining code from the vertical slice, enhancing performance, and simplifying future feature integration
+- Worked closely with other developers to ensure refactored systems met project requirements without disrupting ongoing development
+
+## Quality Assurance
+- Worked closely with the QA team to identify, troubleshoot, and resolve bugs
+- Performed optimizations to enhance game performance and stability
+
+Throughout the development process, I demonstrated adaptability by moving between different systems, implementing features as required, and ensuring high-quality code through strategic refactoring efforts.

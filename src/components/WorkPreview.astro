@@ -1,0 +1,61 @@
+---
+ const projects = [
+        {
+            title: "Project Abyss",
+            description: "An open-world space exploration game with procedurally generated planets.",
+            role: "Lead Gameplay Programmer - Custom Engine",
+            company: "Plasma Technologies",
+            date: "Ongoing",
+            url: "/work/04_project_abyss/",
+        },
+         {
+            title: "Phantom Fury",
+            description: "A fast-paced first-person shooter game with innovative mechanics.",
+            role: "Gameplay Programmer - C++/UE4",
+            company: "Slipgate Ironworks",
+            date: "2021 - 2024",
+            url: "/work/01_phantom-fury/",
+        },
+        {
+            title: "Project Plagued",
+            description: "A topdown action/story game.",
+            role: "Project Founder and Director",
+            company: "Nocturnum Games",
+            date: "Ongoing",
+            url: "/work/02_hobby/",
+        }
+    ];
+    
+---
+<div class="relative lg:row-span-1">
+    <div class="absolute inset-px rounded-lg bg-zinc-100 dark:bg-zinc-800 max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]">
+    </div>
+    <div class="relative flex h-full flex-col overflow-hidden prose prose-zinc dark:prose-invert rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
+        <div class="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
+            <h3 class="mt-2 tracking-tight max-lg:text-center">
+                My Work
+            </h3>
+            <p class="mt-2 max-w-lg max-lg:text-center">
+                Here is a list of my most recent projects
+            </p>
+        </div>
+
+        <div class="inline-flex flex-col px-8 ">
+            {projects.map((project) => (
+               <a 
+                           href={project.url} 
+                           class="not-prose hover:bg-zinc-200 dark:hover:bg-zinc-600 bg-zinc-50 dark:bg-zinc-700 px-4 my-1 rounded-lg shadow font-roboto block">
+                           
+                           <div class="flex justify-between items-center text-xs mt-2">
+                               <span class="text-sm font-bold">{project.title}</span>
+                               <span>{project.date}</span>
+                           </div>
+                           <div class="flex flex-col items-start text-xs mt-1 pb-2">
+                               <span>{project.role}</span>
+                               <span class="italic">{project.company}</span>
+                           </div>
+                       </a>
+            ))}
+        </div>
+    </div>
+</div>

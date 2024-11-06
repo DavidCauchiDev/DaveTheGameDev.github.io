@@ -1,228 +1,134 @@
 ---
-import { getCollection } from "astro:content";
 
 // Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-// Component Imports
-import CallToAction from "../components/CallToAction.astro";
-import Grid from "../components/Grid.astro";
-import Hero from "../components/Hero.astro";
-import Icon from "../components/Icon.astro";
-import Pill from "../components/Pill.astro";
-import PortfolioPreview from "../components/PortfolioPreview.astro";
+import TimezoneDisplay from '../components/Timezone.astro';
+import WorkPreview from '../components/WorkPreview.astro';
 
-// Page section components
-import ContactCTA from "../components/ContactCTA.astro";
-import Skills from "../components/Skills.astro";
 
-// Content Fetching: List four most recent work projects
-const projects = (await getCollection("work"))
-    .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
-    .slice(0, 4);
-
-// Full Astro Component Syntax:
-// https://docs.astro.build/basics/astro-components/
 ---
 
 <BaseLayout>
-    <div class="stack gap-20 lg:gap-48">
-        <div class="wrapper stack gap-8 lg:gap-20">
-            <header class="hero">
-                <Hero
-                    title="Hello, my name is David Cauchi"
-                    tagline="I'm a software engineer specialising in game development based in Australia. I love building software and learning new ways to improve the way I make games."
-                    align="start"
-                >
-                    <div class="roles">
-                        <Pill>Game Developer</Pill>
-                        <Pill>C++</Pill>
-                        <Pill>C#</Pill>
-                        <Pill>C</Pill>
-                        <Pill>Odin</Pill>
-                    </div>
-                </Hero>
-            </header>
-
-            <!-- <Skills /> -->
+    <div class="mx-auto -mt-12 max-w-7xl px-6 sm:mt-0 lg:px-8 xl:-mt-8">
+        <div class="pt-12 sm:pt-12 prose prose-zinc prose-xl dark:prose-invert">
+            <div>
+                <h2 class="">Welcome to my portfolio</h2>
+                <p class="mt-2 max-w-4xl text-pretty tracking-tight">
+                    I'm a software engineer specialising in game development
+                    based in Australia. I love building software and learning
+                    new ways to improve the way I make games.
+                </p>
+            </div>
         </div>
-
-        <main class="wrapper stack gap-20 lg:gap-48">
-            <section class="section with-background with-cta">
-                <header class="section-header stack gap-2 lg:gap-4">
-                    <h3>Selected Work</h3>
-                    <p>
-                        Take a look below at some of my featured work from the
-                        past few years.
-                    </p>
-                </header>
-
-                <div class="gallery">
-                    <Grid variant="offset">
-                        {
-                            projects.map((project) => (
-                                <li>
-                                    <PortfolioPreview project={project} />
-                                </li>
-                            ))
-                        }
-                    </Grid>
-                </div>
-
-                <div class="cta">
-                    <CallToAction href="/work/">
-                        View All
-                        <Icon icon="arrow-right" size="1.2em" />
-                    </CallToAction>
-                </div>
-            </section>
-        </main>
-
-        <ContactCTA />
     </div>
-</BaseLayout>
 
-<style>
-    .hero {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
-    }
+    <div>
+        <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
+            <div
+                class="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2"
+            >
+                <div
+                    class="relative lg:row-span-2 prose prose-zinc dark:prose-invert"
+                >
+                    <div
+                        class="absolute inset-px rounded-lg bg-zinc-100 dark:bg-zinc-800 lg:rounded-l-[2rem]"
+                    >
+                    </div>
+                    <div
+                        class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-l-[calc(2rem+1px)]"
+                    >
+                        <div class="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
+                            <h3 class="mt-2 max-lg:text-center">Skills</h3>
+                            <ul
+                                role="list"
+                                class=""
+                                style="list-style-type:square"
+                            >
+                                <li>C++</li>
+                                <li>C#</li>
 
-    .roles {
-        display: none;
-    }
-
-    .hero img {
-        aspect-ratio: 5 / 4;
-        object-fit: cover;
-        object-position: top;
-        border-radius: 1.5rem;
-        box-shadow: var(--shadow-md);
-    }
-
-    @media (min-width: 50em) {
-        .hero {
-            display: grid;
-            grid-template-columns: 6fr 4fr;
-            padding-inline: 2.5rem;
-            gap: 3.75rem;
-        }
-
-        .roles {
-            margin-top: 0.5rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .hero img {
-            aspect-ratio: 3 / 4;
-            border-radius: 4.5rem;
-            object-fit: cover;
-        }
-    }
-
-    /* ====================================================== */
-
-    .section {
-        display: grid;
-        gap: 2rem;
-    }
-
-    .with-background {
-        position: relative;
-    }
-
-    .with-background::before {
-        --hero-bg: var(--bg-image-subtle-2);
-
-        content: "";
-        position: absolute;
-        pointer-events: none;
-        left: 50%;
-        width: 100vw;
-        aspect-ratio: calc(2.25 / var(--bg-scale));
-        top: 0;
-        transform: translateY(-75%) translateX(-50%);
-        background:
-            url("/assets/backgrounds/noise.png") top center/220px repeat,
-            var(--hero-bg) center center / var(--bg-gradient-size) no-repeat,
-            var(--gray-999);
-        background-blend-mode: overlay, normal, normal, normal;
-        mix-blend-mode: var(--bg-blend-mode);
-        z-index: -1;
-    }
-
-    .with-background.bg-variant::before {
-        --hero-bg: var(--bg-image-subtle-1);
-    }
-
-    .section-header {
-        justify-self: center;
-        text-align: center;
-        max-width: 50ch;
-        font-size: var(--text-md);
-        color: var(--gray-300);
-    }
-
-    .section-header h3 {
-        font-size: var(--text-2xl);
-    }
-
-    @media (min-width: 50em) {
-        .section {
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-areas: "header header header header" "gallery gallery gallery gallery";
-            gap: 5rem;
-        }
-
-        .section.with-cta {
-            grid-template-areas: "header header header cta" "gallery gallery gallery gallery";
-        }
-
-        .section-header {
-            grid-area: header;
-            font-size: var(--text-lg);
-        }
-
-        .section-header h3 {
-            font-size: var(--text-4xl);
-        }
-
-        .with-cta .section-header {
-            justify-self: flex-start;
-            text-align: left;
-        }
-
-        .gallery {
-            grid-area: gallery;
-        }
-
-        .cta {
-            grid-area: cta;
-        }
-    }
-
-    /* ====================================================== */
-
-    .mention-card {
-        display: flex;
-        height: 7rem;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        border: 1px solid var(--gray-800);
-        border-radius: 1.5rem;
-        color: var(--gray-300);
-        background: var(--gradient-subtle);
-        box-shadow: var(--shadow-sm);
-    }
-
-    @media (min-width: 50em) {
-        .mention-card {
-            border-radius: 1.5rem;
-            height: 9.5rem;
-        }
-    }
-</style>
+                                <li>Unreal Engine 5</li>
+                                <li>Unity</li>
+                                <li>Unity VCS</li>
+                                <li>Git</li>
+                                <li>Visual Studio</li>
+                                <li>Rider</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div
+                        class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-zinc-300 dark:ring-zinc-700 lg:rounded-l-[2rem]"
+                    >
+                    </div>
+                </div>
+                <div class="relative max-lg:row-start-1">
+                    <div
+                        class="absolute inset-px rounded-lg bg-zinc-100 dark:bg-zinc-800 max-lg:rounded-t-[2rem]"
+                    >
+                    </div>
+                    <div
+                        class="relative flex h-full flex-col overflow-hidden prose prose-zinc dark:prose-invert rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]"
+                    >
+                        <div class="px-8 pt-8 sm:px-10 sm:pt-10">
+                            <h3 class="mt-2 tracking-tight max-lg:text-center">
+                                Location and Timezone
+                            </h3>
+              
+                            <TimezoneDisplay yourTimezone="Australia/Sydney" />
+                        </div>
+                    </div>
+                    <div
+                        class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-zinc-300 dark:ring-zinc-700 max-lg:rounded-t-[2rem]"
+                    >
+                    </div>
+                </div>
+                <div
+                    class="relative max-lg:row-start-3 lg:col-start-2 lg:row-start-2 prose prose-zinc dark:prose-invert"
+                >
+                    <div
+                        class="absolute inset-px rounded-lg bg-zinc-100 dark:bg-zinc-800"
+                    >
+                    </div>
+                    <div
+                        class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]"
+                    >
+                      <div class="px-8 pt-8 sm:px-10 sm:pt-10 flex flex-col items-start">
+    <h3 class="mt-2 tracking-tight max-lg:text-center">
+        Blog
+    </h3>
+    <p class="mt-2 max-w-lg max-lg:text-center">
+        I sometimes write about my thoughts on game development.
+    </p>
+    <div class="w-full flex justify-end mt-4 pb-8"> <!-- Added this div for alignment -->
+        <a href="/blog" class="not-prose">
+            <button type="button" class="inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                Explore Posts
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                    <path fill-rule="evenodd" d="M2 8a.75.75 0 0 1 .75-.75h8.69L8.22 4.03a.75.75 0 0 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06-1.06l3.22-3.22H2.75A.75.75 0 0 1 2 8Z" clip-rule="evenodd" />
+                </svg>
+            </button> 
+        </a>
+    </div>
+</div>
+                    </div>
+                    <div
+                        class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-zinc-300 dark:ring-zinc-700"
+                    >
+                    </div>
+                </div>
+                <div class="relative lg:row-span-2">
+                    <div
+                        class="absolute inset-px rounded-lg bg-zinc-100 dark:bg-zinc-800 max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"
+                    >
+                    </div>
+                    <div
+                        class="relative flex h-full flex-col overflow-hidden prose prose-zinc dark:prose-invert rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]"
+                    >
+                        <WorkPreview/>
+                     <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-zinc-300 dark:ring-zinc-700 max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"></div>
+                </div>
+            </div>
+        </div>
+    </div></BaseLayout
+>
