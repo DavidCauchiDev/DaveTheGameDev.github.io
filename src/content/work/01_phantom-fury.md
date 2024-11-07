@@ -61,8 +61,4 @@ This expanded weapon system laid the foundation for Phantom Fury's dynamic and e
 - Reduced technical debt by streamlining code from the vertical slice, enhancing performance, and simplifying future feature integration
 - Worked closely with other developers to ensure refactored systems met project requirements without disrupting ongoing development
 
-## Quality Assurance
-- Worked closely with the QA team to identify, troubleshoot, and resolve bugs
-- Performed optimizations to enhance game performance and stability
-
 Throughout the development process, I demonstrated adaptability by moving between different systems, implementing features as required, and ensuring high-quality code through strategic refactoring efforts.
