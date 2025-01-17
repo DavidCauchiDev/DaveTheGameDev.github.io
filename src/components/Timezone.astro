@@ -1,102 +1,120 @@
 ---
 interface Props {
-  yourTimezone: string;
+    yourTimezone: string;
 }
 
-const { yourTimezone = 'UTC' } = Astro.props;
+const { yourTimezone = "UTC" } = Astro.props;
 ---
 
 <timezone-display data-your-timezone={yourTimezone} class="block max-w-sm">
-  <div class="timezone font-roboto your-timezone text-sm"></div>
-  <div class="time font-roboto text-lg font-bold"></div>
-  <div class="difference mt-8 font-roboto text-md font-bold"></div>
+    <div class="timezone font-roboto your-timezone text-sm"></div>
+    <div class="time font-roboto text-lg font-bold"></div>
+    <div class="difference mt-8 font-roboto text-md font-bold"></div>
 </timezone-display>
 
 <script>
-  class TimezoneDisplay extends HTMLElement {
-    constructor() {
-      super();
-      this.yourTimezone = this.dataset.yourTimezone || 'UTC';
+    class TimezoneDisplay extends HTMLElement {
+        constructor() {
+            super();
+            this.yourTimezone = this.dataset.yourTimezone || "UTC";
+        }
+
+        connectedCallback() {
+            this.render();
+            this.updateTime();
+            this.timer = setInterval(() => this.updateTime(), 1000);
+        }
+
+        disconnectedCallback() {
+            clearInterval(this.timer);
+        }
+
+        render() {
+            const timezoneElement = this.querySelector(".your-timezone");
+            const timezoneText = this.getAustralianEasternTimeZone(
+                this.yourTimezone,
+            );
+            timezoneElement.textContent = timezoneText;
+        }
+
+        updateTime() {
+            const now = new Date();
+            const userTimezone =
+                Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+            const timeElement = this.querySelector(".time");
+            const differenceElement = this.querySelector(".difference");
+
+            const formatter = new Intl.DateTimeFormat("en-US", {
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+                hour12: true,
+                timeZone: this.yourTimezone,
+            });
+
+            timeElement.textContent = formatter.format(now);
+
+            const difference = this.getTimezonesDifference(
+                this.yourTimezone,
+                userTimezone,
+            );
+            differenceElement.textContent = `${difference}`;
+        }
+
+        getTimezonesDifference(zone1, zone2) {
+            const now = new Date();
+            const zone1Date = new Date(
+                now.toLocaleString("en-US", { timeZone: zone1 }),
+            );
+            const zone2Date = new Date(
+                now.toLocaleString("en-US", { timeZone: zone2 }),
+            );
+            const diffMinutes = (zone1Date - zone2Date) / 60000; // difference in minutes
+
+            const hours = Math.abs(Math.floor(diffMinutes / 60));
+            const minutes = Math.abs(Math.floor(diffMinutes % 60));
+            const sign = diffMinutes >= 0 ? "+" : "-";
+
+            if (diffMinutes === 0) {
+                return "";
+            }
+
+            const positive = diffMinutes >= 0 ? "behind" : "ahead";
+            return `You are ${sign}${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")} hours ${positive} of me`;
+        }
+
+        getAustralianEasternTimeZone(timezone) {
+            if (
+                timezone === "Australia/Sydney" ||
+                timezone === "Australia/Melbourne"
+            ) {
+                const now = new Date();
+                const australiaTime = new Date(
+                    now.toLocaleString("en-US", { timeZone: timezone }),
+                );
+                const isDST =
+                    this.isAustralianEasternDaylightTime(australiaTime);
+                return `${timezone} (${isDST ? "AEDT" : "AEST"})`;
+            }
+            return timezone;
+        }
+
+        isAustralianEasternDaylightTime(date) {
+            // DST in Australia typically starts on the first Sunday in October and ends on the first Sunday in April
+            const year = date.getFullYear();
+            const dstStart = new Date(year, 9, 1); // October 1
+            const dstEnd = new Date(year, 3, 1); // April 1
+
+            // Adjust to first Sunday if not already
+            dstStart.setDate(
+                dstStart.getDate() + ((7 - dstStart.getDay()) % 7),
+            );
+            dstEnd.setDate(dstEnd.getDate() + ((7 - dstEnd.getDay()) % 7));
+
+            return date >= dstStart || date < dstEnd;
+        }
     }
 
-    connectedCallback() {
-      this.render();
-      this.updateTime();
-      this.timer = setInterval(() => this.updateTime(), 1000);
-    }
-
-    disconnectedCallback() {
-      clearInterval(this.timer);
-    }
-
-    render() {
-      const timezoneElement = this.querySelector('.your-timezone');
-      const timezoneText = this.getAustralianEasternTimeZone(this.yourTimezone);
-      timezoneElement.textContent = timezoneText;
-    }
-
-    updateTime() {
-      const now = new Date();
-      const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-      const timeElement = this.querySelector('.time');
-      const differenceElement = this.querySelector('.difference');
-
-      const formatter = new Intl.DateTimeFormat('en-US', {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: true,
-        timeZone: this.yourTimezone
-      });
-
-      timeElement.textContent = formatter.format(now);
-
-      const difference = this.getTimezonesDifference(this.yourTimezone, userTimezone);
-      differenceElement.textContent = `${difference}`;
-    }
-
-    getTimezonesDifference(zone1, zone2) {
-      const now = new Date();
-      const zone1Date = new Date(now.toLocaleString('en-US', {timeZone: zone1}));
-      const zone2Date = new Date(now.toLocaleString('en-US', {timeZone: zone2}));
-      const diffMinutes = (zone1Date - zone2Date) / 60000; // difference in minutes
-
-      const hours = Math.abs(Math.floor(diffMinutes / 60));
-      const minutes = Math.abs(Math.floor(diffMinutes % 60));
-      const sign = diffMinutes >= 0 ? '+' : '-';
-
-      if(diffMinutes === 0) {
-        return "" 
-      }
-
-      const positive = diffMinutes >= 0 ? "ahead" : "behind"
-      return `You are ${sign}${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} hours ${positive} of me`;
-    }
-
-    getAustralianEasternTimeZone(timezone) {
-      if (timezone === 'Australia/Sydney' || timezone === 'Australia/Melbourne') {
-        const now = new Date();
-        const australiaTime = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
-        const isDST = this.isAustralianEasternDaylightTime(australiaTime);
-        return `${timezone} (${isDST ? 'AEDT' : 'AEST'})`;
-      }
-      return timezone;
-    }
-
-    isAustralianEasternDaylightTime(date) {
-      // DST in Australia typically starts on the first Sunday in October and ends on the first Sunday in April
-      const year = date.getFullYear();
-      const dstStart = new Date(year, 9, 1); // October 1
-      const dstEnd = new Date(year, 3, 1);   // April 1
-
-      // Adjust to first Sunday if not already
-      dstStart.setDate(dstStart.getDate() + (7 - dstStart.getDay()) % 7);
-      dstEnd.setDate(dstEnd.getDate() + (7 - dstEnd.getDay()) % 7);
-
-      return date >= dstStart || date < dstEnd;
-    }
-  }
-
-  customElements.define('timezone-display', TimezoneDisplay);
+    customElements.define("timezone-display", TimezoneDisplay);
 </script>
